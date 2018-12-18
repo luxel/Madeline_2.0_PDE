@@ -23,7 +23,8 @@ RUN mkdir -p /tmp/cmake_download && \
 
 # Download and install openssl
 RUN yum -y install openssl && \
-	yum -y install openssl-libs
+	yum -y install openssl-libs && \
+	yum -y install openssl-devel.i686
 
 # Download and install libcurl
 RUN yum -y install libcurl && \
