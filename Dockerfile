@@ -34,6 +34,9 @@ RUN yum -y install libcurl && \
 RUN yum -y install libxml2 && \
 	yum -y install libxml2-devel
 
+# Download and install gettext
+RUN yum -y install gettext-devel 
+
 RUN yum clean all
 
 COPY ./ /build-temp/
