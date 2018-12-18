@@ -14,13 +14,12 @@ RUN yum -y install centos-release-scl && \
 	yum clean all
 
 # Download and install latest cmake.
-RUN yum -y install cmake
-# RUN mkdir -p /tmp/cmake_download && \
-# 	pushd /tmp/cmake_download && \
-# 	wget -nv 'https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.sh' && \
-# 	bash cmake-3.10.2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir && \
-# 	popd && \
-# 	rm -rf /tmp/cmake_download
+RUN mkdir -p /tmp/cmake_download && \
+	pushd /tmp/cmake_download && \
+	wget -nv 'https://cmake.org/files/v3.13/cmake-3.13.2-Linux-x86_64.sh' && \
+	bash cmake-3.13.2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir && \
+	popd && \
+	rm -rf /tmp/cmake_download
 
 # Download and install openssl
 RUN yum -y install openssl && \
