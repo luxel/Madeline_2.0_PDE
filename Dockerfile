@@ -1,14 +1,38 @@
-FROM gcc
-RUN apt-get update && apt-get install -y cmake \
-	libssl-dev \
-	# libcurl-dev \
-	libxml2-dev
+FROM centos:7
 
-RUN apt-get install -y gettext \
-	gettext-lint
+# Download essentials for the following commands.
+RUN yum update -y && \
+	yum -y install wget tar && \
+	yum clean all
 
-RUN apt-get install -y inkscape \
-	doxygen
+# Download and install newer gcc compiler.
+RUN yum -y install centos-release-scl && \
+	yum -y install devtoolset-7-toolchain && \
+	scl enable devtoolset-7 bash && \
+	yum clean all
+
+# Download and install latest cmake.
+RUN mkdir -p /tmp/cmake_download && \
+	pushd /tmp/cmake_download && \
+	wget -nv 'https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.sh' && \
+	bash cmake-3.10.2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir && \
+	popd && \
+	rm -rf /tmp/cmake_download
+
+# Download and install openssl
+RUN yum -y install openssl && \
+	yum -y install openssl-libs && \
+	yum clean all
+
+# Download and install libcurl
+RUN yum -y install libcurl && \
+	yum -y install libcurl-devel && \
+	yum clean all
+
+# Download and install libxml2
+RUN yum -y install libxml2 && \
+	yum -y install libxml2-devel && \
+	yum clean all
 
 COPY ./ /build-temp/
 WORKDIR /build-temp/
@@ -16,7 +40,7 @@ RUN cmake ./
 RUN make
 RUN make install
 
-FROM debian:stretch
+FROM centos:7
 
 COPY --from=0 /usr/local/share/locale/fr/LC_MESSAGES/madeline2.mo /usr/local/share/locale/fr/LC_MESSAGES/madeline2.mo
 COPY --from=0 /usr/local/share/locale/th/LC_MESSAGES/madeline2.mo /usr/local/share/locale/th/LC_MESSAGES/madeline2.mo
