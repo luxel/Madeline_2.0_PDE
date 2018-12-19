@@ -16,17 +16,13 @@ RUN mkdir -p /tmp/cmake_download && \
 	rm -rf /tmp/cmake_download
 
 # Download and install openssl
-RUN yum -y install openssl && \
-	yum -y install openssl-libs && \
-	yum -y install openssl-devel.i686
+RUN yum -y install openssl-devel
 
 # Download and install libcurl
-RUN yum -y install libcurl && \
-	yum -y install libcurl-devel
+RUN yum -y install libcurl-devel
 
 # Download and install libxml2
-RUN yum -y install libxml2 && \
-	yum -y install libxml2-devel
+RUN yum -y install libxml2-devel
 
 # Download and install gettext
 RUN yum -y install gettext-devel 
