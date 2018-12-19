@@ -2,10 +2,16 @@ FROM centos:7
 
 # Download essentials for the following commands.
 RUN yum update -y && \
-	yum -y install wget tar
+	yum -y install wget tar && \
+	yum clean all
 
 # Download and install newer gcc compiler.
-RUN yum -y groupinstall 'Development Tools'
+RUN yum -y install centos-release-scl && \
+	yum -y install devtoolset-7-toolchain && \
+	yum -y install gcc && \
+	yum -y install gcc-c++ && \
+	scl enable devtoolset-7 bash && \
+	yum clean all
 
 # Download and install latest cmake.
 RUN mkdir -p /tmp/cmake_download && \
