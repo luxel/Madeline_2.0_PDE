@@ -27,6 +27,9 @@ RUN yum -y install libxml2-devel
 # Download and install gettext
 RUN yum -y install gettext-devel 
 
+# Add Chinese font support
+RUN yum -y groupinstall chinese-support 
+
 RUN yum clean all
 
 COPY ./ /build-temp/
